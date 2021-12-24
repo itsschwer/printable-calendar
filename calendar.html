@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Calendar</title>
+	<script>
+		function onLoad() {
+			formatTable(13, 1, 1, false);
+		}
+		
+		function formatTable(weeks, initialDay, initialMonth, alt, hiddenWeeks) {
+			let monthLengths = [31, 28, 31, 30, 31, 30,
+								31, 31, 30, 31, 30, 31];
+
+			let tbody = document.querySelector("tbody");
+			let row = document.querySelector(".hide").innerHTML;
+
+			tbody.innerHTML = "";
+
+			for (let i = weeks; i > 0; i--) {
+				tbody.innerHTML += row;
+
+				if (i <= hiddenWeeks) {
+					const row = tbody.children[weeks - i];
+					row.classList += "invisible";
+				}
+			}
+
+			const tds = document.querySelectorAll("tbody td");
+			for (let i = 0, d = initialDay, m = initialMonth - 1; i < tds.length; i++) {
+				const td = tds[i];
+				if (alt) {
+					td.classList += "alt";
+				}
+
+				td.innerHTML = d;
+				d++;
+
+				if (d > monthLengths[m]) {
+					d = 1;
+					m++;
+					if (m > monthLengths.length - 1) {
+						m = 0;
+					}
+					alt = !alt;
+				}
+			}
+
+			// let d = initialDay;
+			// let m = initialMonth - 1;
+			// tds.forEach(td => {
+			// 	if (alt) {
+			// 		td.classList += "alt";
+			// 	}
+
+			// 	td.innerHTML = d;
+			// 	d++;
+
+			// 	if (d > monthLengths[m]) {
+			// 		d = 1;
+			// 		m++;
+			// 		if (m > monthLengths.length - 1) {
+			// 			m = 0;
+			// 		}
+			// 		alt = !alt;
+			// 	}
+			// });
+		}
+	</script>
+
+	<style>
+		@font-face {
+			font-family: Midnight;
+			src: url(Blackout-Midnight.ttf);
+		}
+
+		@font-face {
+			font-family: Rubik;
+			src: url(Rubik-Bold.ttf);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+
+		body {
+			background-color: #5F6368;
+		}
+
+		.hide {
+			display: none;
+		}
+
+		.invisible {
+			visibility: hidden;
+		}
+
+		div.actualpage {
+			background-color: white;
+			/* DIN A4 standard paper size */
+			height: 297mm;
+			width: 210mm;
+		}
+
+		div.page {
+			/* padding: 10mm 15mm; */
+			padding: 10mm 10mm;
+		}
+
+		table {
+			width: 100%;
+			height: 277mm;
+			font-family: Rubik;
+			/* Center horizontally */
+			margin: 0 auto;
+		}
+
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+
+		th, td {
+			width: 14.2857143%;
+		}
+
+		thead th {
+			font-family: Midnight;
+			font-size: 24pt;
+			color: white;
+			background-color: black;
+			padding: 1.25% 0%;
+		}
+
+		tbody tr {
+			font-size: 10pt;
+		}
+
+		tbody td {
+			padding: 0.1em 0.25em;
+			vertical-align: text-top;
+		}
+
+		tbody td.alt {
+			background-color: #DCDCDC;
+		}
+
+		tbody tr.invisible, tbody .invisible td {
+			border: none;
+		}
+	</style>
+</head>
+
+<body onload="onLoad()">
+	<div class="actualpage">
+		<div class="page">
+			<table>
+				<thead>
+					<tr>
+						<th>Mon</th>
+						<th>Tue</th>
+						<th>Wed</th>
+						<th>Thu</th>
+						<th>Fri</th>
+						<th>Sat</th>
+						<th>Sun</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+				<tfoot class="hide">
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>
