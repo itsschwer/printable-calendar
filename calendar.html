@@ -30,6 +30,8 @@
 				cells[i].innerHTML = d;
 				d++;
 
+				cells[i].classList.add(`m${m + 1}`);
+
 				if (alt) {
 					cells[i].classList.add("alt");
 				}
@@ -55,6 +57,11 @@
 		@font-face {
 			font-family: Rubik;
 			src: url(Rubik-Bold.ttf);
+		}
+
+		@font-face {
+			font-family: MaShanZheng;
+			src: url(MaShanZheng-Regular.ttf);
 		}
 
 		* {
@@ -119,6 +126,7 @@
 		tbody td {
 			padding: 0.1em 0.25em;
 			vertical-align: text-top;
+			position: relative;
 		}
 
 		tbody td.alt {
@@ -128,6 +136,37 @@
 		tbody tr.invisible, tbody .invisible td {
 			border: none;
 		}
+
+		tbody td::after {
+			color: #DCDCDC;
+			text-align: center;
+			font-family: MaShanZheng;
+			font-size: 44pt;
+			/* center */
+			position: absolute;
+			display: inline-block;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			line-height: 75px;
+
+			/* transform: rotate(-10deg); */
+		}
+
+		tbody td.alt::after { color: white; }
+
+		tbody td.m1::after { content: "一"; }
+		tbody td.m2::after { content: "二"; }
+		tbody td.m3::after { content: "三"; }
+		tbody td.m4::after { content: "四"; }
+		tbody td.m5::after { content: "五"; }
+		tbody td.m6::after { content: "六"; }
+		tbody td.m7::after { content: "七"; }
+		tbody td.m8::after { content: "八"; }
+		tbody td.m9::after { content: "九"; }
+		tbody td.m10::after { content: "十"; }
+		tbody td.m11::after { content: "十一"; font-size: 36pt; }
+		tbody td.m12::after { content: "十二"; font-size: 36pt; }
 	</style>
 </head>
 
