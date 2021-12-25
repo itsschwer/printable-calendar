@@ -5,16 +5,15 @@
 	<title>Calendar</title>
 	<script>
 		function onLoad() {
-			formatTable(13, 1, 1, false);
+			format(1, 1, 12, false, 0, false);
 		}
-		
-		function formatTable(weeks, initialDay, initialMonth, alt, hiddenWeeks) {
-			let monthLengths = [31, 28, 31, 30, 31, 30,
-								31, 31, 30, 31, 30, 31];
 
-			let tbody = document.querySelector("tbody");
-			let row = document.querySelector(".hide").innerHTML;
+		function format(initialDay, initialMonth, weeks, alt, hiddenWeeks, isLeap) {
+			const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+			if (isLeap) monthLengths[1] = 29;
 
+			const row = document.querySelector("#row").innerHTML;
+			const tbody = document.querySelector("#body");
 			tbody.innerHTML = "";
 
 			for (let i = weeks; i > 0; i--) {
@@ -22,19 +21,18 @@
 
 				if (i <= hiddenWeeks) {
 					const row = tbody.children[weeks - i];
-					row.classList += "invisible";
+					row.classList.add("invisible");
 				}
 			}
 
-			const tds = document.querySelectorAll("tbody td");
-			for (let i = 0, d = initialDay, m = initialMonth - 1; i < tds.length; i++) {
-				const td = tds[i];
-				if (alt) {
-					td.classList += "alt";
-				}
-
-				td.innerHTML = d;
+			const cells = tbody.querySelectorAll("td");
+			for (let i = 0, d = initialDay, m = initialMonth - 1; i < cells.length; i++) {
+				cells[i].innerHTML = d;
 				d++;
+
+				if (alt) {
+					cells[i].classList.add("alt");
+				}
 
 				if (d > monthLengths[m]) {
 					d = 1;
@@ -45,26 +43,6 @@
 					alt = !alt;
 				}
 			}
-
-			// let d = initialDay;
-			// let m = initialMonth - 1;
-			// tds.forEach(td => {
-			// 	if (alt) {
-			// 		td.classList += "alt";
-			// 	}
-
-			// 	td.innerHTML = d;
-			// 	d++;
-
-			// 	if (d > monthLengths[m]) {
-			// 		d = 1;
-			// 		m++;
-			// 		if (m > monthLengths.length - 1) {
-			// 			m = 0;
-			// 		}
-			// 		alt = !alt;
-			// 	}
-			// });
 		}
 	</script>
 
@@ -168,8 +146,8 @@
 						<th>Sun</th>
 					</tr>
 				</thead>
-				<tbody></tbody>
-				<tfoot class="hide">
+				<tbody id="body"></tbody>
+				<tfoot id="row" class="hide">
 					<tr>
 						<td></td>
 						<td></td>
