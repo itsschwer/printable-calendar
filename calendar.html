@@ -69,26 +69,25 @@
 			size: A4 portrait;
 		}
 
+		:root {
+			--page-color: #FFFFFF;
+			--text-color: #000000;
+			--alt-color: #EFEFEF;
+		}
+
 		* {
 			margin: 0;
 			padding: 0;
 			border: 0;
 		}
 
-		body {
-			background-color: #5F6368;
-		}
+		body { background-color: #5F6368; }
 
-		.hide {
-			display: none;
-		}
-
-		.invisible {
-			visibility: hidden;
-		}
+		.hide { display: none; }
+		.invisible { visibility: hidden; }
 
 		div.actualpage {
-			background-color: white;
+			background-color: var(--page-color);
 			/* DIN A4 standard paper size */
 			height: 297mm;
 			width: 210mm;
@@ -108,7 +107,7 @@
 		}
 
 		table, th, td {
-			border: 1px solid black;
+			border: 1px solid var(--text-color);
 			border-collapse: collapse;
 		}
 
@@ -119,8 +118,8 @@
 		thead th {
 			font-family: Midnight;
 			font-size: 24pt;
-			color: white;
-			background-color: black;
+			color: var(--page-color);
+			background-color: var(--text-color);
 			padding: 1.25% 0%;
 		}
 
@@ -135,7 +134,7 @@
 		}
 
 		tbody td.alt {
-			background-color: #F4F4F4;
+			background-color: var(--alt-color);
 		}
 
 		tbody tr.invisible, tbody .invisible td {
@@ -143,7 +142,7 @@
 		}
 
 		tbody td::after {
-			color: #F4F4F4;
+			color: var(--alt-color);
 			text-align: center;
 			font-family: MaShanZheng;
 			font-size: 44pt;
@@ -158,7 +157,7 @@
 			/* transform: rotate(-10deg); */
 		}
 
-		tbody td.alt::after { color: white; }
+		tbody td.alt::after { color: var(--page-color); }
 
 		tbody td.m1::after { content: "一"; }
 		tbody td.m2::after { content: "二"; }
