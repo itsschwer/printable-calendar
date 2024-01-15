@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "version": "0.0.0",
+    "name": "✧ calendar",
+    "description": "printable · calendar · offline",
+    "incognito": "split",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_title": "open · print · calendar"
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+C"
+            }
+        }
+    },
+    "sandbox": {
+        "pages": [
+            "calendar.html"
+        ]
+    }
+}

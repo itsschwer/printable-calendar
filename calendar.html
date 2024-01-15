@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>print · calendar</title>
 
     <script>
@@ -112,17 +113,17 @@
     <style>
         @font-face {
             font-family: Midnight;
-            src: url(Blackout-Midnight.ttf);
+            src: url('./fonts/Blackout-Midnight.ttf');
         }
 
         @font-face {
             font-family: Rubik;
-            src: url(Rubik-Bold.ttf);
+            src: url('./fonts/Rubik-Bold.ttf');
         }
 
         @font-face {
             font-family: MaShanZheng;
-            src: url(MaShanZheng-Regular.ttf);
+            src: url('./fonts/MaShanZheng-Regular.ttf');
         }
 
         @page {
@@ -234,6 +235,10 @@
             background-color: var(--alt-color);
             border-radius: 0.5em;
             border: 1px dashed var(--text-color);
+            padding: 0.1em;
+
+            font-family: serif;
+            font-size: 12pt;
         }
 
         form ul {
@@ -245,7 +250,7 @@
         form label {
             display: inline-block;
             text-align: right;
-            width: 6em;
+            width: 6.5em;
             font-style: italic;
         }
 
@@ -260,7 +265,7 @@
         }
 
         form button {
-            margin-left: 7.5em;
+            margin-left: 8.125em;
         }
     </style>
 </head>
