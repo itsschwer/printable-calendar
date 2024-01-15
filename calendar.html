@@ -86,8 +86,13 @@
             const day = date.getDate();
             const month = date.getMonth()+1;
             // console.log(`${day}/${month} | ${date}`);
-            //! todo: figure out if isLeap should be true
-            formatTable(day, month, weeks, initialAlt, hiddenWeeks, false);
+
+            // https://stackoverflow.com/questions/8175521/javascript-to-find-leap-year/8175905#8175905
+            const isLeap = (month > 2) ?
+                new Date(date.getFullYear()+1, 1, 29).getMonth() == 1 :
+                new Date(date.getFullYear(), 1, 29).getMonth() == 1
+
+            formatTable(day, month, weeks, initialAlt, hiddenWeeks, isLeap);
         }
 
         // https://stackoverflow.com/questions/72957624/convert-a-week-number-and-year-to-a-date-object-in-javascript/72961100#72961100
