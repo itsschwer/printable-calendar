@@ -3,48 +3,69 @@
 
 <head>
     <title>print · calendar</title>
-    <script>
-        function onLoad() {
-            format(1, 1, 12, false, 0, false);
-        }
 
-        function format(initialDay, initialMonth, weeks, alt, hiddenWeeks, isLeap) {
+    <script>
+        window.addEventListener("load", (e) => { formatTable(1, 1, 13, false, 0, false); });
+
+        function formatTable(initialDay, initialMonth, weeks, initialAlt, hiddenWeeks, isLeap) {
+            const headers = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
             const monthLengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             if (isLeap) monthLengths[1] = 29;
 
-            const row = document.querySelector("#row").innerHTML;
-            const tbody = document.querySelector("#body");
-            tbody.innerHTML = "";
+            const table = document.querySelector("table");
+            table.innerHTML = "";
+            populateTableHead(table, headers);
+            populateTableBody(table, headers.length, monthLengths, initialDay, initialMonth, weeks, initialAlt, hiddenWeeks, isLeap);
+        }
 
-            for (let i = weeks; i > 0; i--) {
-                tbody.innerHTML += row;
+        function populateTableHead(table, headers) {
+            const thead = document.createElement("thead");
+            const tr = document.createElement("tr");
+            thead.appendChild(tr);
 
-                if (i <= hiddenWeeks) {
-                    const row = tbody.children[weeks - i];
-                    row.classList.add("invisible");
-                }
+            for (let i = 0; i < headers.length; i++) {
+                const th = document.createElement("th");
+                th.appendChild(document.createTextNode(headers[i]));
+                tr.appendChild(th);
             }
 
-            const cells = tbody.querySelectorAll("td");
-            for (let i = 0, d = initialDay, m = initialMonth - 1; i < cells.length; i++) {
-                cells[i].innerHTML = d;
-                d++;
+            table.appendChild(thead);
+        }
 
-                cells[i].classList.add(`m${m + 1}`);
+        function populateTableBody(table, weekLength, monthLengths, initialDay, initialMonth, weeks, initialAlt, hiddenWeeks, isLeap) {
+            const tbody = document.createElement("tbody");
 
-                if (alt) {
-                    cells[i].classList.add("alt");
-                }
+            let d = initialDay;
+            let m = initialMonth;
+            let alt = initialAlt;
 
-                if (d > monthLengths[m]) {
-                    d = 1;
-                    m++;
-                    if (m > monthLengths.length - 1) {
-                        m = 0;
+            for (let week = weeks; week > 0; week--) {
+                const tr = document.createElement("tr");
+                if (week <= hiddenWeeks) { tr.classList.add("invisible"); }
+                
+                for (let day = 0; day < weekLength; day++) {
+                    const td = document.createElement("td");
+                    td.classList.add(`m${m}`);
+                    td.innerText = d;
+                    if (alt) { td.classList.add("alt"); }
+
+                    d++;
+                    if (d > monthLengths[m-1]) {
+                        d = 1;
+                        m++;
+                        if (m > monthLengths.length) {
+                            m = 1;
+                        }
+                        alt = !alt;
                     }
-                    alt = !alt;
+
+                    tr.appendChild(td);
                 }
+
+                tbody.appendChild(tr);
             }
+
+            table.appendChild(tbody);
         }
     </script>
 
@@ -91,8 +112,6 @@
             padding: 10mm 10mm;
             margin: auto;
         }
-
-        .hide { display: none; }
 
         table {
             width: 100%;
@@ -163,32 +182,9 @@
     </style>
 </head>
 
-<body onload="onLoad()">
+<body>
     <div class="page">
         <table>
-            <thead>
-                <tr>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                    <th>Sun</th>
-                </tr>
-            </thead>
-            <tbody id="body"></tbody>
-            <tfoot id="row" class="hide">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 </body>
