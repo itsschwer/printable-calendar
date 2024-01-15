@@ -5,7 +5,15 @@
     <title>print · calendar</title>
 
     <script>
-        window.addEventListener("load", (e) => { formatTable(1, 1, 13, false, 0, false); });
+        window.addEventListener("load", (e) => {
+            formatTable(1, 1, 13, false, 0, false);
+
+            const form = document.querySelector("form");
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                parseForm(e.target);
+            });
+        });
 
         function formatTable(initialDay, initialMonth, weeks, initialAlt, hiddenWeeks, isLeap) {
             const headers = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -66,6 +74,33 @@
             }
 
             table.appendChild(tbody);
+        }
+
+        function parseForm(form) {
+            const initial = form.querySelector("input#initialWeek")?.value;
+            const weeks = Number(form.querySelector("input#weeks")?.value);
+            const hiddenWeeks = Number(form.querySelector("input#hiddenWeeks")?.value);
+            const initialAlt = Boolean(form.querySelector("input#initialAlt")?.checked);
+            
+            const date = initial ? parseWeekString(initial) : new Date(Date.now());
+            const day = date.getDate();
+            const month = date.getMonth()+1;
+            // console.log(`${day}/${month} | ${date}`);
+            //! todo: figure out if isLeap should be true
+            formatTable(day, month, weeks, initialAlt, hiddenWeeks, false);
+        }
+
+        // https://stackoverflow.com/questions/72957624/convert-a-week-number-and-year-to-a-date-object-in-javascript/72961100#72961100
+        function parseWeekString(str) {
+            const [year, week] = str.split("-W");
+            // Get date of January 4th for specified year
+            // > First week of the year is the week that contains the first Thursday of the year (weeks begin on Monday); ∴ 4th
+            // https://developer.mozilla.org/en-US/docs/Web/HTML/Date_and_time_formats#week_strings
+            const date = new Date(year, 0, 4);
+            // Get previous Monday, add 7 days for each week after first
+            date.setDate(date.getDate() - (date.getDay() || 7) + 1 + (week - 1) * 7);
+
+            return date;
         }
     </script>
 
@@ -180,6 +215,49 @@
         td.m11::after { content: "十一"; font-size: 36pt; }
         td.m12::after { content: "十二"; font-size: 36pt; }
     </style>
+
+    <style>
+        @media print {
+            form { display: none; }
+        }
+
+        form {
+            position: fixed;
+            top: 0.5em;
+            right: 0.5em;
+            
+            background-color: var(--alt-color);
+            border-radius: 0.5em;
+            border: 1px dashed var(--text-color);
+        }
+
+        form ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        form label {
+            display: inline-block;
+            text-align: right;
+            width: 6em;
+            font-style: italic;
+        }
+
+        form input {
+            box-sizing: border-box;
+            width: 10em;
+        }
+
+        form input[type="checkbox"] {
+            margin: 0.2em 0;
+            width: 1em;
+        }
+
+        form button {
+            margin-left: 7.5em;
+        }
+    </style>
 </head>
 
 <body>
@@ -187,6 +265,31 @@
         <table>
         </table>
     </div>
+
+    <form>
+        <ul>
+            <li>
+                <label for="initialWeek">Initial week:</label>
+                <input id="initialWeek" name="initialWeek" type="week" />
+            </li>
+            <li>
+                <label for="weeks">Weeks:</label>
+                <input id="weeks" name="weeks" type="number" value="13" min="0" max="15" />
+            </li>
+            <li>
+                <label for="hiddenWeeks">Hidden weeks:</label>
+                <input id="hiddenWeeks" name="hiddenWeeks" type="number" value="0" />
+            </li>
+            <li>
+                <label for="initialAlt">Initial alt:</label>
+                <input id="initialAlt" name="initialAlt" type="checkbox" value="1" />
+            </li>
+
+            <li>
+                <button type="submit">Render</button>
+            </li>
+        </ul>
+    </form>
 </body>
 
 </html>
