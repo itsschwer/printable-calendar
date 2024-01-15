@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Calendar</title>
+	<title>print · calendar</title>
 	<script>
 		function onLoad() {
 			format(1, 1, 12, false, 0, false);
@@ -70,51 +70,49 @@
 		}
 
 		:root {
+            --body-color: #5F6368;
 			--page-color: #FFFFFF;
 			--text-color: #000000;
 			--alt-color: #EFEFEF;
 		}
 
-		* {
-			margin: auto;
-			padding: 0;
-			border: 0;
-		}
+		body {
+            background-color: var(--body-color);
+            margin: 0;
+        }
 
-		body { background-color: #5F6368; }
-
-		.hide { display: none; }
-		.invisible { visibility: hidden; }
-
-		div.actualpage {
+		.page {
 			background-color: var(--page-color);
 			/* DIN A4 standard paper size */
 			height: 297mm;
 			width: 210mm;
+            /* Layout */
+            box-sizing: border-box;
+            padding: 10mm 10mm;
+            margin: auto;
 		}
 
-		div.page {
-			padding: 10mm 10mm;
-		}
+        .hide { display: none; }
 
 		table {
-			width: 100%;
-			height: 277mm;
-			font-family: Rubik;
-			/* Center horizontally */
+            width: 100%;
+			height: 100%;
+            /* Center horizontally */
 			margin: 0 auto;
+
+			font-family: Rubik;
 		}
 
 		table, th, td {
-			border: 1px solid var(--text-color);
 			border-collapse: collapse;
+			border: 1px solid var(--text-color);
 		}
 
 		th, td {
-			width: 14.2857143%;
+            width: calc(100% / 7);
 		}
 
-		thead th {
+		th {
 			font-family: Midnight;
 			font-size: 24pt;
 			color: var(--page-color);
@@ -122,87 +120,77 @@
 			padding: 1.25% 0%;
 		}
 
-		tbody tr {
-			font-size: 10pt;
-		}
-
-		tbody td {
+		td {
+            font-size: 10pt;
 			padding: 0.1em 0.25em;
 			vertical-align: text-top;
 			position: relative;
 		}
 
-		tbody td.alt {
-			background-color: var(--alt-color);
-		}
+        tr.invisible, .invisible td {
+            visibility: hidden;
+            border: none;
+        }
 
-		tbody tr.invisible, tbody .invisible td {
-			border: none;
-		}
+		td.alt { background-color: var(--alt-color); }
+        td.alt::after { color: var(--page-color); }
 
-		tbody td::after {
+		td::after {
 			color: var(--alt-color);
 			text-align: center;
 			font-family: MaShanZheng;
 			font-size: 44pt;
-			/* center */
+			/* Center */
 			position: absolute;
-			display: inline-block;
 			left: 0;
 			width: 100%;
 			height: 100%;
 			line-height: 75px;
-
-			/* transform: rotate(-10deg); */
 		}
 
-		tbody td.alt::after { color: var(--page-color); }
-
-		tbody td.m1::after { content: "一"; }
-		tbody td.m2::after { content: "二"; }
-		tbody td.m3::after { content: "三"; }
-		tbody td.m4::after { content: "四"; }
-		tbody td.m5::after { content: "五"; }
-		tbody td.m6::after { content: "六"; }
-		tbody td.m7::after { content: "七"; }
-		tbody td.m8::after { content: "八"; }
-		tbody td.m9::after { content: "九"; }
-		tbody td.m10::after { content: "十"; }
-		tbody td.m11::after { content: "十一"; font-size: 36pt; }
-		tbody td.m12::after { content: "十二"; font-size: 36pt; }
+		td.m1::after  { content: "一"; }
+		td.m2::after  { content: "二"; }
+		td.m3::after  { content: "三"; }
+		td.m4::after  { content: "四"; }
+		td.m5::after  { content: "五"; }
+		td.m6::after  { content: "六"; }
+		td.m7::after  { content: "七"; }
+		td.m8::after  { content: "八"; }
+		td.m9::after  { content: "九"; }
+		td.m10::after { content: "十"; }
+		td.m11::after { content: "十一"; font-size: 36pt; }
+		td.m12::after { content: "十二"; font-size: 36pt; }
 	</style>
 </head>
 
 <body onload="onLoad()">
-	<div class="actualpage">
-		<div class="page">
-			<table>
-				<thead>
-					<tr>
-						<th>Mon</th>
-						<th>Tue</th>
-						<th>Wed</th>
-						<th>Thu</th>
-						<th>Fri</th>
-						<th>Sat</th>
-						<th>Sun</th>
-					</tr>
-				</thead>
-				<tbody id="body"></tbody>
-				<tfoot id="row" class="hide">
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-	</div>
+    <div class="page">
+        <table>
+            <thead>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody id="body"></tbody>
+            <tfoot id="row" class="hide">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </body>
 
 </html>
