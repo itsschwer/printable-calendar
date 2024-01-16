@@ -225,44 +225,31 @@
 
         form {
             position: fixed;
-            top: 0.5em;
-            right: 0.5em;
-            
-            background-color: var(--alt-color);
-            border-radius: 0.5em;
-            border: 1px dashed var(--text-color);
-            padding: 0.1em;
+            top: 0.2em;
+            right: 0.4em;
 
             font-family: serif;
             font-size: 12pt;
         }
 
-        form ul {
-            list-style: none;
+        form fieldset {
             margin: 0;
-            padding: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--alt-color);
+            border: 1px dashed var(--text-color);
         }
 
-        form label {
-            display: inline-block;
-            text-align: right;
-            width: 6.5em;
-            font-style: italic;
+        form fieldset > legend {
+            background-color: var(--page-color);
+            border: 1px solid var(--text-color);
         }
 
-        form input {
-            box-sizing: border-box;
-            width: 10em;
-        }
-
-        form input[type="checkbox"] {
-            margin: 0.2em 0;
-            width: 1em;
-        }
-
-        form button {
-            margin-left: 8.125em;
-        }
+        form label { font-style: italic; }
+        form input[type="checkbox"] { align-self: flex-start; margin: 0; }
+        form button { align-self: flex-end; }
     </style>
 </head>
 
@@ -273,28 +260,23 @@
     </div>
 
     <form>
-        <ul>
-            <li>
-                <label for="initialWeek">Initial week:</label>
-                <input id="initialWeek" name="initialWeek" type="week" />
-            </li>
-            <li>
-                <label for="weeks">Weeks:</label>
-                <input id="weeks" name="weeks" type="number" value="13" min="0" max="18" />
-            </li>
-            <li>
-                <label for="hiddenWeeks">Hidden weeks:</label>
-                <input id="hiddenWeeks" name="hiddenWeeks" type="number" value="0" />
-            </li>
-            <li>
-                <label for="initialAlt">Initial alt:</label>
-                <input id="initialAlt" name="initialAlt" type="checkbox" value="1" />
-            </li>
+        <fieldset>
+            <legend>settings</legend>
 
-            <li>
-                <button type="submit">Render</button>
-            </li>
-        </ul>
+            <label for="initialWeek">initial week:</label>
+            <input id="initialWeek" name="initialWeek" type="week" />
+
+            <label for="weeks">weeks:</label>
+            <input id="weeks" name="weeks" type="number" value="13" min="0" max="18" />
+
+            <label for="hiddenWeeks">hidden weeks:</label>
+            <input id="hiddenWeeks" name="hiddenWeeks" type="number" value="0" />
+
+            <label for="initialAlt">initial alt:</label>
+            <input id="initialAlt" name="initialAlt" type="checkbox" value="1" />
+
+            <button type="submit">render</button>
+        </fieldset>
     </form>
 </body>
 
