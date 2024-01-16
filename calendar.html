@@ -185,7 +185,7 @@
         }
 
         td {
-            font-family: Rubik, 'Segoe UI', sans-serif;
+            font-family: 'Rubik', 'Segoe UI', sans-serif;
             font-size: 10pt;
             font-weight: bold;
             color: var(--text-color);
@@ -225,13 +225,13 @@
 
     <style>
         @media print {
-            form { display: none; }
+            .noprint { display: none; }
         }
 
         form {
             position: fixed;
-            top: 0.2em;
-            right: 0.4em;
+            top: 0.2rem;
+            right: 0.4rem;
 
             font-family: serif;
             font-size: 12pt;
@@ -265,7 +265,7 @@
         </table>
     </div>
 
-    <form>
+    <form class="noprint">
         <fieldset>
             <legend>settings</legend>
 
