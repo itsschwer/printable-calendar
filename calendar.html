@@ -157,8 +157,6 @@
         table {
             width: 100%;
             height: 100%;
-            /* Center horizontally */
-            margin: 0 auto;
 
             font-family: Rubik;
         }
@@ -177,7 +175,12 @@
             font-size: 24pt;
             color: var(--page-color);
             background-color: var(--text-color);
-            padding: 1.25% 0%;
+            padding: 1.25% 0;
+        }
+
+        tr.invisible, .invisible > td {
+            visibility: hidden;
+            border: none;
         }
 
         td {
@@ -187,24 +190,19 @@
             position: relative;
         }
 
-        tr.invisible, .invisible td {
-            visibility: hidden;
-            border: none;
+        td::after {
+            color: var(--alt-color);
+            font-family: MaShanZheng;
+            font-size: 44pt;
+            /* Layout */
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-content: center;
         }
 
         td.alt { background-color: var(--alt-color); }
         td.alt::after { color: var(--page-color); }
-
-        td::after {
-            color: var(--alt-color);
-            text-align: center;
-            font-family: MaShanZheng;
-            font-size: 44pt;
-            /* Center */
-            position: absolute;
-            inset: 0;
-            line-height: 1.3em;
-        }
 
         td.m1::after  { content: "一"; }
         td.m2::after  { content: "二"; }
@@ -282,7 +280,7 @@
             </li>
             <li>
                 <label for="weeks">Weeks:</label>
-                <input id="weeks" name="weeks" type="number" value="13" min="0" max="15" />
+                <input id="weeks" name="weeks" type="number" value="13" min="0" max="18" />
             </li>
             <li>
                 <label for="hiddenWeeks">Hidden weeks:</label>
