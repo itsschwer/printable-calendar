@@ -156,21 +156,21 @@
             margin: auto;
         }
 
-        table {
+        .calendar table {
             width: 100%;
             height: 100%;
         }
 
-        table, th, td {
+        .calendar table, .calendar th, .calendar td {
             border-collapse: collapse;
             border: 1px solid var(--text-color);
         }
 
-        th, td {
+        .calendar th, .calendar td {
             width: calc(100% / 7);
         }
 
-        th {
+        .calendar th {
             font-family: 'Times New Roman', Times, serif;
             font-size: 24pt;
             text-transform: lowercase;
@@ -179,12 +179,12 @@
             padding-block-end: 0.1em;
         }
 
-        tr.invisible, .invisible > td {
+        .calendar tr.invisible, .calendar .invisible > td {
             visibility: hidden;
             border-color: transparent;
         }
 
-        td {
+        .calendar td {
             font-family: 'Rubik', 'Segoe UI', sans-serif;
             font-size: 10pt;
             font-weight: bold;
@@ -194,7 +194,7 @@
             position: relative;
         }
 
-        td::after {
+        .calendar td::after {
             font-family: 'Ma Shan Zheng';
             font-size: 44pt;
             font-weight: initial;
@@ -206,39 +206,40 @@
             place-content: center;
         }
 
-        td.alt { background-color: var(--alt-color); }
-        td.alt::after { color: var(--page-color); }
+        .calendar td.alt { background-color: var(--alt-color); }
+        .calendar td.alt::after { color: var(--page-color); }
 
-        td.m1::after  { content: "一"; }
-        td.m2::after  { content: "二"; }
-        td.m3::after  { content: "三"; }
-        td.m4::after  { content: "四"; }
-        td.m5::after  { content: "五"; }
-        td.m6::after  { content: "六"; }
-        td.m7::after  { content: "七"; }
-        td.m8::after  { content: "八"; }
-        td.m9::after  { content: "九"; }
-        td.m10::after { content: "十"; }
-        td.m11::after { content: "十一"; font-size: 36pt; }
-        td.m12::after { content: "十二"; font-size: 36pt; }
+        .calendar td.m1::after  { content: "一"; }
+        .calendar td.m2::after  { content: "二"; }
+        .calendar td.m3::after  { content: "三"; }
+        .calendar td.m4::after  { content: "四"; }
+        .calendar td.m5::after  { content: "五"; }
+        .calendar td.m6::after  { content: "六"; }
+        .calendar td.m7::after  { content: "七"; }
+        .calendar td.m8::after  { content: "八"; }
+        .calendar td.m9::after  { content: "九"; }
+        .calendar td.m10::after { content: "十"; }
+        .calendar td.m11::after { content: "十一"; font-size: 36pt; }
+        .calendar td.m12::after { content: "十二"; font-size: 36pt; }
     </style>
 
     <style>
         @media print {
             .noprint { display: none; }
         }
+        .noprint {
+            font-family: serif;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
 
         form {
             position: fixed;
             top: 0.2rem;
             right: 0.4rem;
-
-            font-family: serif;
-            font-size: 12pt;
-            color: var(--text-color);
         }
 
-        form fieldset {
+        fieldset {
             margin: 0;
 
             display: flex;
@@ -248,42 +249,92 @@
             border: 1px dashed var(--text-color);
         }
 
-        form fieldset > legend {
+        legend {
             background-color: var(--page-color);
             border: 1px solid var(--text-color);
         }
 
+        fieldset ul {
+            margin-block: 0;
+            padding-inline-start: 1rem;
+            list-style-type: none;
+        }
+        fieldset li::marker { content: '~'; }
+        fieldset li { padding-inline-start: 1rch; }
+
         form label { font-style: italic; }
         form input[type="checkbox"] { align-self: flex-start; margin: 0; }
         form button { align-self: flex-end; }
+
+        .noprint table {
+            position: fixed;
+            bottom: 0.4rem;
+            right: 0.4rem;
+
+            background-color: var(--alt-color);
+        }
+        .noprint table, .noprint th, .noprint td {
+            border: 1px solid var(--text-color);
+            border-collapse: collapse;
+        }
+        .noprint th, .noprint td { padding-inline: 0.2rem; }
     </style>
 </head>
 
 <body>
-    <div class="page">
+    <div class="page calendar">
         <table>
         </table>
     </div>
 
-    <form class="noprint">
-        <fieldset>
-            <legend>settings</legend>
+    <div class="noprint fixed">
+        <form>
+            <fieldset>
+                <legend>settings</legend>
 
-            <label for="initialWeek">initial week:</label>
-            <input id="initialWeek" name="initialWeek" type="week" />
+                <label for="initialWeek">initial week:</label>
+                <input id="initialWeek" name="initialWeek" type="week">
 
-            <label for="weeks">weeks:</label>
-            <input id="weeks" name="weeks" type="number" min="0" max="18" value="13" placeholder="0" />
+                <label for="weeks">weeks:</label>
+                <input id="weeks" name="weeks" type="number" min="0" max="18" value="13" placeholder="0">
 
-            <label for="hiddenWeeks">hidden weeks:</label>
-            <input id="hiddenWeeks" name="hiddenWeeks" type="number" placeholder="0" />
+                <label for="hiddenWeeks">hidden weeks:</label>
+                <input id="hiddenWeeks" name="hiddenWeeks" type="number" placeholder="0">
 
-            <label for="initialAlt">initial alt:</label>
-            <input id="initialAlt" name="initialAlt" type="checkbox" value="1" />
+                <label for="initialAlt">initial alt:</label>
+                <input id="initialAlt" name="initialAlt" type="checkbox" value="1">
 
-            <button type="submit">render</button>
-        </fieldset>
-    </form>
+                <button type="submit">render</button>
+            </fieldset>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>print setting <i>(chrome)</i></th>
+                    <th>value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Paper size</td>
+                    <td>A4</td>
+                </tr>
+                <tr>
+                    <td>Margins</td>
+                    <td>Default</td>
+                </tr>
+                <tr>
+                    <td>Scale</td>
+                    <td>Default</td>
+                </tr>
+                <tr>
+                    <td>Options</td>
+                    <td>Background graphics</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
