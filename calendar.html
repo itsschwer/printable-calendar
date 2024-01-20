@@ -90,7 +90,7 @@
             const hiddenWeeks = Number(form.querySelector("input#hiddenWeeks")?.value);
             const initialAlt = Boolean(form.querySelector("input#initialAlt")?.checked);
             
-            const date = initial ? parseWeekString(initial) : new Date(Date.now());
+            const date = initial ? parseWeekString(initial) : getThisMonday();
             const day = date.getDate();
             const month = date.getMonth()+1;
             // console.log(`${day}/${month} | ${date}`);
@@ -114,6 +114,12 @@
             date.setDate(date.getDate() - (date.getDay() || 7) + 1 + (week - 1) * 7);
 
             return date;
+        }
+
+        function getThisMonday() {
+            const week = new Date(Date.now());
+            week.setDate(week.getDate() - week.getDay() + 1);
+            return week;
         }
     </script>
 
