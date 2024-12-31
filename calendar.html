@@ -58,7 +58,7 @@
             for (let week = weeks; week > 0; week--) {
                 const tr = document.createElement("tr");
                 if (week <= hiddenWeeks) { tr.classList.add("invisible"); }
-                
+
                 for (let day = 0; day < weekLength; day++) {
                     const td = document.createElement("td");
                     td.classList.add(`m${m}`);
@@ -89,7 +89,7 @@
             const weeks = Number(form.querySelector("input#weeks")?.value);
             const hiddenWeeks = Number(form.querySelector("input#hiddenWeeks")?.value);
             const initialAlt = Boolean(form.querySelector("input#initialAlt")?.checked);
-            
+
             const date = getMonday(initialWeek);
             const day = date.getDate();
             const month = date.getMonth()+1;
@@ -118,7 +118,8 @@
 
         function getMonday(dateString) {
             const week = new Date(dateString ? dateString : Date.now());
-            week.setDate(week.getDate() - week.getDay() + 1);
+            const offset = (week.getDay() + 6) % 7;
+            week.setDate(week.getDate() - offset);
             return week;
         }
     </script>
