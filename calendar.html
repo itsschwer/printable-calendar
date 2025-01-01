@@ -118,7 +118,7 @@
 
             const endDate = new Date(date);
             endDate.setDate(endDate.getDate() + ((weeks - hiddenWeeks) * 7) - 1);
-            console.log(`${date.getWeek()} → ${endDate.getWeek()}`);
+            document.querySelector("#week-range").innerText = `w${date.getWeek()}–w${endDate.getWeek()}`;
         }
 
         // https://stackoverflow.com/questions/72957624/convert-a-week-number-and-year-to-a-date-object-in-javascript/72961100#72961100
@@ -294,7 +294,17 @@
 
         form label { font-style: italic; }
         form input[type="checkbox"] { align-self: flex-start; margin: 0; }
-        form button { align-self: flex-end; }
+        form .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        /* form button { align-self: flex-end; } */
+        form .row #week-range {
+            font-size: 0.9rem;
+            font-family: monospace;
+            color: var(--body-color);
+        }
 
         .noprint table {
             position: fixed;
@@ -335,7 +345,10 @@
                 <label for="initialAlt">initial alt:</label>
                 <input id="initialAlt" name="initialAlt" type="checkbox" value="1">
 
-                <button type="submit">render</button>
+                <div class="row">
+                    <span id="week-range"></span>
+                    <button type="submit">render</button>
+                </div>
             </fieldset>
         </form>
 
