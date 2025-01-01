@@ -13,6 +13,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 
     <script>
+        // https://weeknumber.com/how-to/javascript
+        Date.prototype.getWeek = function() {
+            const date = new Date(this.valueOf());
+            const day = (this.getDay() + 6) % 7;
+            date.setDate(date.getDate() - day + 3);
+            // Jan 4 is always in week 1
+            const firstWeek = new Date(date.getFullYear(), 0, 4);
+            // Adjust to Thursday in week 1 and count number of weeks from date to week 1.
+            const msInDay = 86400000;
+            const differenceInDays = ((date.getTime() - firstWeek.getTime()) / msInDay);
+            return 1 + Math.round(((differenceInDays - 3 + ((firstWeek.getDay() + 6) % 7))) / 7);
+        };
+    </script>
+    <script>
         window.addEventListener("load", (e) => {
             formatTable(1, 1, 13, false, 0, false);
 
@@ -101,6 +115,10 @@
                 new Date(date.getFullYear(), 1, 29).getMonth() == 1
 
             formatTable(day, month, weeks, initialAlt, hiddenWeeks, isLeap);
+
+            const endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + ((weeks - hiddenWeeks) * 7) - 1);
+            console.log(`${date.getWeek()} → ${endDate.getWeek()}`);
         }
 
         // https://stackoverflow.com/questions/72957624/convert-a-week-number-and-year-to-a-date-object-in-javascript/72961100#72961100
